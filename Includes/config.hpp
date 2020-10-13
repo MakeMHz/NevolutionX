@@ -4,6 +4,9 @@
 #include "../3rdparty/json.hpp"
 #include <string>
 
+/*============================================================================*/
+/*                                      FTP                                   */
+/*============================================================================*/
 class ftpConfig {
   bool enable;
   std::string username;
@@ -56,9 +59,12 @@ public:
   ftpConfig ftp;
   sntpConfig sntp;
 };
+void to_json(nlohmann::json& j, Settings const& s);
+void from_json(nlohmann::json const& j, Settings& s);
 
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(Settings, ftp, sntp)
-
+/*============================================================================*/
+/*                                 Config                                     */
+/*============================================================================*/
 class Config {
   bool changed = false;
 public:

@@ -12,6 +12,9 @@
 #define HOME "." SEPARATOR
 #endif
 
+/*============================================================================*/
+/*                                      FTP                                   */
+/*============================================================================*/
 ftpConfig::ftpConfig() {
   enable = true;
   username = "xbox";
@@ -72,6 +75,9 @@ void ftpConfig::setPort(int p) {
   }
 }
 
+/*============================================================================*/
+/*                                      SNTP                                  */
+/*============================================================================*/
 sntpConfig::sntpConfig() {
   enable = false;
   address = "no";
@@ -120,6 +126,25 @@ void sntpConfig::setPort(int p) {
   }
 }
 
+/*============================================================================*/
+/*                                Settings                                    */
+/*============================================================================*/
+void to_json(nlohmann::json& j, Settings const& s) {
+  j = nlohmann::json{{"ftp", s.ftp}, {"sntp", s.sntp}};
+}
+
+void from_json(nlohmann::json const& j, Settings& s) {
+  if (j.contains("ftp")) {
+    s.ftp = j["ftp"].get<ftpConfig>();
+  }
+  if (j.contains("sntp")) {
+    s.sntp = j["sntp"].get<sntpConfig>();
+  }
+}
+
+/*============================================================================*/
+/*                                 Config                                     */
+/*============================================================================*/
 Config::Config() {
   std::ifstream configFile(HOME "config.json");
   nlohmann::json json;
