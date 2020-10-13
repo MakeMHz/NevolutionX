@@ -25,14 +25,39 @@ public:
 void to_json(nlohmann::json& j, ftpConfig const& f);
 void from_json(nlohmann::json const& j, ftpConfig& f);
 
+/*============================================================================*/
+/*                                      SNTP                                  */
+/*============================================================================*/
+class sntpConfig {
+  bool enable;
+  std::string address;
+  int port;
+public:
+  sntpConfig();
 
+  bool getEnabled() const {return enable; }
+  const std::string& getAddress() const { return address; }
+  int getPort() const { return port; }
+
+  void setEnabled(bool val);
+  void setAddress(std::string const& addr);
+  void setPort(int p);
+};
+void to_json(nlohmann::json& j, sntpConfig const& s);
+void from_json(nlohmann::json const& j, sntpConfig& s);
+
+
+/*============================================================================*/
+/*                                Settings                                    */
+/*============================================================================*/
 class Settings {
 public:
   Settings() = default;
   ftpConfig ftp;
+  sntpConfig sntp;
 };
 
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(Settings, ftp)
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(Settings, ftp, sntp)
 
 class Config {
   bool changed = false;

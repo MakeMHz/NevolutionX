@@ -9,6 +9,7 @@
 #include "renderer.h"
 #include "subsystems.h"
 
+#include "sntpClient.h"
 #include "ftpServer.h"
 
 #include <type_traits>
@@ -52,6 +53,11 @@ int main(void) {
 
     // Set a hint that we want to use our gamecontroller always
     SDL_SetHint(SDL_HINT_JOYSTICK_ALLOW_BACKGROUND_EVENTS, "1");
+
+    if (init == 0 && config.settings.sntp.getEnabled()) {
+      std::thread thrS(sntp_getTime, &config.settings.sntp);
+      thrS.detach();
+    }
 
     if (init == 0 && config.settings.ftp.getEnabled()) {
       s = new ftpServer(&config.settings.ftp);

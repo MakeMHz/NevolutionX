@@ -72,6 +72,54 @@ void ftpConfig::setPort(int p) {
   }
 }
 
+sntpConfig::sntpConfig() {
+  enable = false;
+  address = "no";
+  port = 123;
+}
+
+void to_json(nlohmann::json& j, sntpConfig const& s) {
+  j = nlohmann::json{{"enable", s.getEnabled()},
+                     {"server", s.getAddress()},
+                     {"port", s.getPort()}};
+}
+
+void from_json(nlohmann::json const& j, sntpConfig& s) {
+  if (j.contains("enable")) {
+    if (j["enable"].is_boolean()) {
+      s.setEnabled(j["enable"]);
+    }
+  }
+  if (j.contains("server")) {
+    if (j["server"].is_string()) {
+      s.setAddress(j["server"]);
+    }
+  }
+  if (j.contains("port")) {
+    if (j["port"].is_number()) {
+      s.setPort(j["port"]);
+    }
+  }
+}
+
+void sntpConfig::setEnabled(bool val) {
+  if (enable != val) {
+    enable = val;
+  }
+}
+
+void sntpConfig::setAddress(std::string const& addr) {
+  if (address.compare(addr)) {
+    address = addr;
+  }
+}
+
+void sntpConfig::setPort(int p) {
+  if (port != p) {
+    port = p;
+  }
+}
+
 Config::Config() {
   std::ifstream configFile(HOME "config.json");
   nlohmann::json json;
