@@ -1,24 +1,17 @@
+#include "sntpClient.h"
+
 #include <stdint.h>
-#include <atomic>
 #include <string>
 #include <time.h>
-#include <config.hpp>
 
 #ifdef NXDK
-#include <lwip/opt.h>
-#include <lwip/arch.h>
 #include <lwip/netdb.h>
 #include <lwip/errno.h>
 #include <lwip/sockets.h>
-#include <lwip/debug.h>
-#include <lwip/dhcp.h>
 #include <lwip/init.h>
 #include <lwip/netif.h>
 #include <lwip/sys.h>
-#include <lwip/tcpip.h>
-#include <lwip/timeouts.h>
 #include <netif/etharp.h>
-#include <pktdrv.h>
 #include <xboxkrnl/xboxkrnl.h>
 #include <xboxkrnl/xboxdef.h>
 #include <outputLine.h>
