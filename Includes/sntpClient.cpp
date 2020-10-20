@@ -31,7 +31,7 @@ static const uint64_t FROM1600TO1900 = (uint64_t)((3600*24)*(uint64_t)(300*365 +
 
 static const uint64_t FACTOR100NSTO1S = 10000000;
 
-#pragma pack(1)
+#pragma pack(push, 1)
 typedef union tsData {
   struct u {
     uint32_t seconds;
@@ -61,7 +61,7 @@ typedef struct timeData {
   tsData rx_ts;
   tsData tx_ts;
 } timeData;
-#pragma pack()
+#pragma pack(pop)
 
 #ifdef NXDK
 static
